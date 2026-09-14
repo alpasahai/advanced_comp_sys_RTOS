@@ -23,9 +23,9 @@ void blink(int numflash)
     //Alpie Notes: Double check if the delay messes with the scheduler LATEr
     for (int i = 0; i < numflash; i++) {
         gpio_put(25, 1); 
-        delay(500);    
+        delay(2000);    
         gpio_put(25, 0); 
-        delay(500); 
+        delay(2000); 
     }
     gpio_put(25, 0);
 
