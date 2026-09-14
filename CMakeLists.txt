@@ -44,19 +44,19 @@ pico_sdk_init()
 			# These are the object files
                          ./obj/systick.c.obj
                          ./obj/tasks.c.obj
-                         ./obj/add_task.c.obj
-                         ./obj/remove_task.c.obj
+                        #  ./obj/add_task.c.obj
+                        #  ./obj/remove_task.c.obj
                          ./obj/scheduler.c.obj
-						 ./obj/cmdshell.c.obj
+			 ./obj/cmdshell.c.obj
                         
                         # These are the source files
                         # To use comment (#) the corresponding obj file
                         #  and uncomment ( ) the corresponding c file 
 
                         #./src/systick.c
-                        #./src/tasks.c
-                        #./src/add_task.c
-                        #./src/remove_task.c
+                        # ./src/tasks.c
+                        ./src/add_task.c
+                        ./src/remove_task.c
                         #./src/scheduler.c
                         #./src/cmdshell.c
                         #
