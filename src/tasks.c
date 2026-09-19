@@ -58,7 +58,13 @@ void count(int pos)
  */
 void flash( int pos)
 {
-   
+    while (1) {
+        display_buffer[pos] = 0x80; 
+        delay(250);
+
+        display_buffer[pos] = 0x00; 
+        delay(250);
+    }
 }
 
 /* ===========================================================================
@@ -68,7 +74,17 @@ void flash( int pos)
  */
 void hexer( int pos )
 {
-   
+    int value = 15;      //starting at F
+    int direction = -1;  //Counting down first
+
+    while (1) {
+        display_buffer[pos] = seven_seg[value];
+        delay(1000);
+
+        value += direction;
+        if (value <= 0)  { value = 0;  direction = 1;  }  //hit 0, bounce up
+        if (value >= 15) { value = 15; direction = -1; }   //hit F, bounce down
+    }
 }
 
 /* ===========================================================================
@@ -80,6 +96,17 @@ void hexer( int pos )
  */
 void splat(int pos)
 {
-    
-}
+    //SO this handling A+B+C+D+E+F+G+DP - let's add in the numbers or like idk CORTIS lyrics
+    static const uint8_t splat_seq[16] = {
+        0x40, 0x60, 0x70, 0x78, 0x7C, 0x7E, 0x7F, 0xFF,
+        0x7F, 0x7E, 0x7C, 0x78, 0x70, 0x60, 0x40, 0x00
+    };
 
+    int i = 0;
+    while(1) {
+        display_buffer[pos] = splat_seq[i];
+        delay(250);
+
+        i = (i + 1) % 16; //wrap around
+    }
+}
