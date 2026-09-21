@@ -3,6 +3,7 @@
 //Ticks are set in main.c
 
 // returns 0 if the count > 24Bits
+//-------------------MAIN FUNCTION------------------------------------------
 uint32_t configure_Systick(uint32_t micro_seconds)
 {
     //Fixing the Reload situation:
@@ -27,7 +28,6 @@ uint32_t configure_Systick(uint32_t micro_seconds)
 // The RTOS System Ticks are also managed in this systick handler
 
 // Note that this function is commented out so that it uses the template supplied one.
-
 void isr_systick(void) {
     Ticks++;
     if (Ticks % TICKS_BEFORE_SWAP == 0){

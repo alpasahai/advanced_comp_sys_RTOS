@@ -93,7 +93,7 @@ extern int remove_Task(uint32_t id) ;
 
 int Hardware_Abstraction_Layer(void);   // -ve value means it could not startup
 extern unsigned char *display_buffer;   // address of memory where each byte rpresents a digit
-
+extern void display_clear(void); //Clearing the display
 
 
 /*****************************************************************/

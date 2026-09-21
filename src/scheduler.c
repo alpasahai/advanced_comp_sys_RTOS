@@ -7,8 +7,9 @@
 
 //volatile TCB_t *CurrentTCB = NULL; //This might already exist in the main.c so if you have compile errors check
 
+//-------------------MAIN FUNCTIONS------------------------------------------
 void scheduler(void) {
-//================================TEMP MINI ROUND_ROBIN=======================
+//================================NON-PRE-EMPTIVE ROUND ROBIN=======================
     if(Task_List == NULL) return; //There's nothing to run
 
     if(CurrentTCB == NULL || CurrentTCB->next == NULL) {
@@ -17,6 +18,10 @@ void scheduler(void) {
     else {
         CurrentTCB = (volatile TCB_t *)CurrentTCB->next; //advancing with no priority
     }
-//================================TEMP MINI ROUND_ROBIN=======================
+//================================NON-PRE-EMPTIVE ROUND ROBIN=======================
+
+//================================PRE-EMPTIVE SCHEDULER=======================
+
+//================================PRE-EMPTIVE SCHEDULER=======================
 }
 
