@@ -78,7 +78,7 @@ void hexer( int pos )
     int direction = -1;  //Counting down first
 
     while (1) {
-        display_buffer[pos] = seven_seg[value];
+        display_buffer[pos] = sev_seg[value];
         delay(1000);
 
         value += direction;
