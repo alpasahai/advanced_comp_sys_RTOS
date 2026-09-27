@@ -6,6 +6,8 @@
 // (4) The context switch load the context of the new task from teh current TCB onto the processor
 
 //volatile TCB_t *CurrentTCB = NULL; //This might already exist in the main.c so if you have compile errors check
+static int32_t tick_count = 0; //Ticks left beforre switching
+
 
 //-------------------MAIN FUNCTIONS------------------------------------------
 void scheduler(void) {
@@ -23,31 +25,21 @@ void scheduler(void) {
 //================================PRE-EMPTIVE SCHEDULER=======================
     if(Task_List == NULL) return; //There's nothing to run
 
-    //finding the highest priority in the Task list
-    uint8_t highest_priority = 0;
-    TCB_t *current = Task_List;
-
-    while (current != NULL){
-        if (current->priority > highest_priority){
-            highest_priority = current->priority;
-        }
-        current = current->next;
+    if(CurrentTCB != NULL && tick_count > 0){
+        tick_count--;
+        return; //not switching just yet
     }
 
-    //Round robining based on highest priority:
-    TCB_t *start = (CurrentTCB == NULL) ? Task_List : (TCB_t *)CurrentTCB->next;
-    if (start == NULL){
-        start = Task_List;
+    //Credits exhausted - the round-robin scheduler will now choose the next task to run based on priority
+    if (CurrentTCB == NULL || CurrentTCB->next == NULL) {
+        CurrentTCB = Task_List;
     }
-    current = start;
-    do{
-        if(current->priority == highest_priority){
-            CurrentTCB = current;
-            return;
-        }
-        current = (current->next == NULL) ? Task_List : current->next;
+    else {
+        CurrentTCB = (volatile TCB_t *)CurrentTCB->next;
     }
-    while (current != start);
+
+    //Setting the priority -> Higher priority tasks will get more ticks before switching
+    tick_count = (CurrentTCB->priority > 0) ? CurrentTCB->priority : 1; //Ensure at least 1 tick for any task
 //================================PRE-EMPTIVE SCHEDULER=======================
 }
 

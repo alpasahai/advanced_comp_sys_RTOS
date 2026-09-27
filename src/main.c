@@ -32,8 +32,27 @@ void initd(int) {
         while(1) ; // spin lock to trap error
     }
 
+    //Displaying HELLO on sev_seg
+    // Clear the display, then write "Hello" across the leftmost 5 digits
+    memset(display_buffer, 0x00, 8);
+    display_buffer[0] = 0x37;  
+    display_buffer[1] = 0x4F;  
+    display_buffer[2] = 0x0E;  
+    display_buffer[3] = 0x0E;  
+    display_buffer[4] = 0x7E;
+    delay(3000);
+    memset(display_buffer, 0x00, 8);
+
     // load tasks (task, arg0,  name, priority)
-    add_Task(&cmdShell,0,"cmdShell",99);
+    // add_Task(&cmdShell,0,"cmdShell",99);
+    //Changing it for the pre-emptive scheduler
+    add_Task(&cmdShell,0,"cmdShell", 1);
+
+    //Remove self so this task stops sitting at the top forever
+    DISABLE_INT(); //stop the tick ISR from reading a half-unlinked list mid-removal
+    //remove_Task(id);
+    Task_List = Task_List->next; //Removing the first task from the list
+    ENABLE_INT();
 
     // keep task in background
     while(1) {}
@@ -58,7 +77,7 @@ int main(void)
   
     // load tasks (task, arg0,  name, priority) 
     // This will be automatically assigned id = 1 since it is first task loaded into the scheduler
-    add_Task(&initd,0,"initd",99);
+    add_Task(&initd,0,"initd", 1);
 
     // Make current tcb pointer point to the start of the task list
     CurrentTCB = Task_List;
