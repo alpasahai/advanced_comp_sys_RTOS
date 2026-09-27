@@ -21,7 +21,7 @@
 static void print_menu(void){
     printf(ROSE"-------------------------♡ ALPIE MAIN MENU ♡-------------------------\n"RESET);
     printf(LIGHT_PINK"pt               + Printing the list of tasks\n"RESET);
-    printf(HOT_PINK"rt id            + Removing a task}\n"RESET);
+    printf(HOT_PINK"rt id            + Removing a task\n"RESET);
     printf(LIGHT_PINK"sd               + SHUT DOWN \n"RESET);
     printf(HOT_PINK"mm               + Pulling Main Menu\n\n"RESET);
     printf(MAGENTA"blink <numflash> <priority>\n"RESET);
